@@ -1,7 +1,5 @@
-#!/bin/bash
 # By thibaut LOMBARD (LombardWeb)
 # This script permit to transfer metadata instantly from one place to another
-
 # Check if exiftool is installed
 if ! command -v exiftool &> /dev/null; then
  echo "Error: exiftool is not installed. Please install it first."
@@ -229,6 +227,44 @@ process_file() {
  fi
 }
 
+# Recursive function to process directories and subdirectories
+process_directory() {
+ local src_dir="$1"
+ local dst_dir="$2"
+ 
+ # Ensure destination directory exists
+ if [ ! -d "$dst_dir" ]; then
+  mkdir -p "$dst_dir" || {
+   echo "Error: Could not create destination directory $dst_dir"
+   return 1
+  }
+ fi
+
+ # Use find to process all files recursively
+ while IFS= read -r source_file; do
+  if [ -f "$source_file" ]; then
+   # Calculate relative path and corresponding destination file
+   relative_path="${source_file#$src_dir/}"
+   dest_file="$dst_dir/$relative_path"
+   
+   # Ensure destination subdirectory exists
+   dest_subdir=$(dirname "$dest_file")
+   if [ ! -d "$dest_subdir" ]; then
+    mkdir -p "$dest_subdir" || {
+     echo "Error: Could not create destination subdirectory $dest_subdir"
+     continue
+    }
+   fi
+   
+   if [ -f "$dest_file" ]; then
+    process_file "$source_file" "$dest_file" && ((count++))
+   else
+    echo "Warning: No matching destination file found for: $relative_path"
+   fi
+  fi
+ done < <(find "$src_dir" -type f)
+}
+
 # Main processing logic
 count=0
 echo "Starting metadata copy process..."
@@ -242,27 +278,18 @@ if [ -f "$source_path" ]; then
   exit 1
  fi
 elif [ -d "$source_path" ]; then
- # Directory mode
+ # Directory mode with subdirectories
  if [ ! -d "$dest_path" ]; then
   echo "Error: Destination must be a directory when source is a directory"
   exit 1
  fi
  
- for source_file in "$source_path"/*; do
-  if [ -f "$source_file" ]; then
-   filename=$(basename "$source_file")
-   dest_file="$dest_path/$filename"
-   
-   if [ -f "$dest_file" ]; then
-    process_file "$source_file" "$dest_file" && ((count++))
-   else
-    echo "Warning: No matching destination file found for: $filename"
-   fi
-  fi
- done
+ process_directory "$source_path" "$dest_path"
 else
  echo "Error: Source must be a file or directory"
  exit 1
 fi
+
+echo "Process completed. Metadata copied for $count files."
 
 echo "Process completed. Metadata copied for $count files."
