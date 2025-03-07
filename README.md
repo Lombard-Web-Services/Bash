@@ -17,45 +17,20 @@ Usage: ./BetC.sh source_directory destination_directory [-j jpg_size_kb] [-m mp4
 Example: ./BetC.sh DCIM/ out -j 700 -m 10 -r yes
 ```
 ### Features
-List of some features added to the script.
-
-#### Command Line Arguments:
-* Requires source and destination directories
-* Optional -j for JPG size in KB (default 700)
-* Optional -m for MP4 size in MB (default 10)
-#### File Processing:
-* Copies all files to destination maintaining directory structure
-* Converts JPG files > specified KB using ImageMagick
-* Converts MP4 files > specified MB using FFmpeg
-* Direct conversion to destination (no temporary files in source)
-
-#### Array Storage:
- * Extension (files_by_ext)
- * Filename (implicit in path)
- * SHA256 hash (hashes_by_ext)
- * Filesize (sizes_by_ext)
-
-#### Destination Directory:
-* Maintains exact filename and extension from source
-* Creates subdirectories as needed
-
-#### GPU management
-* simple and intuitive gpu management for Nvidia Graphic cards supporting CUDA
-* ability to disable the functionnality
-
-#### Mobile device Android phone/tablet Connection
-* ability for this script to connect through Android debug bridge to pull the directory and to transfer its content instantly
-* Adb bridge is faster than PTP protocol, or MTP protocol
-
-#### Zip compression
-* Winzip is used by most of platform
-* at final stage you are able to zip the directory filesize reduced in a Zip file
+List of some features added to the script:
+Backup a folder from android device to local directory 
+Compress (re-encode) files such as JPG or MP4 with ffmpeg and convert
+Can create a zip at the end
+Can remove Junk
+Can be adjusted by size Kb for images, Mb for videos
+Do not compress files by given size
+GPU compliant for ffmpeg
 
 ## meta_transfer.sh transfer metadata instantly from one place to another
 meta_transfer.sh is a script that permit to transfer metadata instantly from one place to another. This script use only exiftool and bash. Source file(s) contained into the directory(ies) must have the same name than the destination files.
 
 #### Metadata 
-The metadata that the script modifies are the following.
+The metadata that the script transfers if it's found are the following .
 ```sh
 "File Modification Date/Time"
 "File Access Date/Time"           
