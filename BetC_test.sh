@@ -1,6 +1,6 @@
 #!/bin/bash
 # By thibaut LOMBARD
-# Calcul le nombre de seconde de différence d'execution des 2 commandes (avec ou sans le prefixe GPU)
+# Calcul le nombre de seconde de différence d'execution de ffmpeg des 2 commandes (avec ou sans le prefixe GPU)
 SECONDS=0
 ffmpeg -loglevel quiet -i input.mp4 -c:v libx264 -pix_fmt yuv420p -vf fps=24,scale=854:480 -c:a mp3 output.mp4 
 echo "1ere commande executée en $SECONDS secondes"
