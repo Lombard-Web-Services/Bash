@@ -17,7 +17,7 @@ Usage: ./BetC.sh source_directory destination_directory [-j jpg_size_kb] [-m mp4
 Example: ./BetC.sh DCIM/ out -j 700 -m 10 -r yes
 ```
 ### Features
-* List of some features added to the script:
+Listing :
 * Backup a folder from android device to local directory 
 * Compress (re-encode) files such as JPG or MP4 with ffmpeg and convert
 * Can create a zip at the end
