@@ -291,5 +291,3 @@ else
 fi
 
 echo "Process completed. Metadata copied for $count files."
-
-echo "Process completed. Metadata copied for $count files."
