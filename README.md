@@ -31,10 +31,10 @@ List of some features added to the script.
 
 #### Array Storage:
 * Stores files in associative arrays by:
-* Extension (files_by_ext)
-* Filename (implicit in path)
-* SHA256 hash (hashes_by_ext)
-* Filesize (sizes_by_ext)
+ * Extension (files_by_ext)
+ * Filename (implicit in path)
+ * SHA256 hash (hashes_by_ext)
+ * Filesize (sizes_by_ext)
 
 #### Destination Directory:
 * Maintains exact filename and extension from source
@@ -46,7 +46,7 @@ List of some features added to the script.
 
 #### Mobile device Android phone/tablet Connection
 * ability for this script to connect through Android debug bridge to pull the directory and to transfer its content instantly
-* Adb bridge is faste than PTP protocol, or MTP protocol
+* Adb bridge is faster than PTP protocol, or MTP protocol
 
 #### Zip compression
 * Winzip is used by most of platform
