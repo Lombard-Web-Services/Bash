@@ -51,6 +51,46 @@ List of some features added to the script.
 * Winzip is used by most of platform
 * at final stage you are able to zip the directory filesize reduced in a Zip file
 
+## meta_transfer.sh Copy metadata from one place to another
+meta_transfer.sh is a script that permit to transfer metadata instantly from one place to another. This script use only exiftool and bash. Source file(s) contained into the directory(ies) must have the same name than the destination files.
+
+#### Metadata 
+The metadata that the script modifies are the following.
+```sh
+"File Modification Date/Time"
+"File Access Date/Time"           
+"File Inode Change Date/Time"
+"Shutter Speed"
+"Create Date"
+"Date/Time Original"
+"Modify Date"
+"Circle Of Confusion"
+"Field Of View"
+"Focal Length"
+"Hyperfocal Distance"
+"Light Value"
+"Scale Factor To 35 mm Equivalent"
+"Aperture"
+"GPS Coordinates"
+"Android Version"
+"Android Manufacturer"
+"Android Model"
+"Track Create Date"
+"Track Modify Date"
+"Media Create Date"
+"Media Modify Date" 
+"GPS Latitude"
+"GPS Longitude"
+"Rotation"
+"GPS Position"
+```
+
+#### Usage 
+You can specify a directory or a file. 
+```sh
+Usage: ./meta_transfer.sh <source_file_or_directory> <destination_file_or_directory>
+```
+
 ### Credits 
 Grok 3.0
 
