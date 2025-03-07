@@ -30,7 +30,6 @@ List of some features added to the script.
 * Direct conversion to destination (no temporary files in source)
 
 #### Array Storage:
-* Stores files in associative arrays by:
  * Extension (files_by_ext)
  * Filename (implicit in path)
  * SHA256 hash (hashes_by_ext)
@@ -41,7 +40,7 @@ List of some features added to the script.
 * Creates subdirectories as needed
 
 #### GPU management
-* simple and intuitive gpu management for Nvidia Graphic cars supporting CUDA
+* simple and intuitive gpu management for Nvidia Graphic cards supporting CUDA
 * ability to disable the functionnality
 
 #### Mobile device Android phone/tablet Connection
