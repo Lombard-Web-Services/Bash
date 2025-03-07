@@ -51,7 +51,7 @@ List of some features added to the script.
 * Winzip is used by most of platform
 * at final stage you are able to zip the directory filesize reduced in a Zip file
 
-## meta_transfer.sh Copy metadata from one place to another
+## meta_transfer.sh transfer metadata instantly from one place to another
 meta_transfer.sh is a script that permit to transfer metadata instantly from one place to another. This script use only exiftool and bash. Source file(s) contained into the directory(ies) must have the same name than the destination files.
 
 #### Metadata 
