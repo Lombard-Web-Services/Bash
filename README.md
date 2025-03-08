@@ -60,7 +60,7 @@ The metadata that the script transfers if it's found are the following .
 "GPS Position"
 ```
 ## Meta_refresh refresh modification date and create date to now
-This script permit to refresh the date of creation and modification date of each files or directory to the actual date.
+This script permit to refresh the date of creation and modification date of each files recursively to the actual date.
 
 #### Usage 
 compile meta_refresh.c or execute meta_refresh.sh
