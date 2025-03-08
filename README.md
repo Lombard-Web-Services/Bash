@@ -59,12 +59,20 @@ The metadata that the script transfers if it's found are the following .
 "Rotation"
 "GPS Position"
 ```
+## Meta_refresh refresh modification date and create date to now
+This script permit to refresh the date of creation and modification date of each files or directory to the actual date.
 
 #### Usage 
-You can specify a directory or a file. 
+compile meta_refresh.c or execute meta_refresh.sh
 ```sh
-Usage: ./meta_transfer.sh <source_file_or_directory> <destination_file_or_directory>
+Usage: ./meta_refresh [-v|--verbose] [--heuristic] <file/directory>
+Will use current date: 2025:03:08 18:43:13
 ```
+
+### options
+* Verbose permit to show debug messages
+* heuristic permit to watch for metadata containing "date" and modify them on the fly
+
 
 ### Credits 
 Grok 3.0
