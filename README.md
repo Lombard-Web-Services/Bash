@@ -88,7 +88,7 @@ Command :
 * The -v argument permit to output the log (verbose)
 * --sort-order asc define the sorting by ascending order
 * --sort-by filename permit to sort by filename
-* download is the directory path (relative or not)
+* download is the directory path (relative or absolute)
 * 10 is for files which size exceed 10Mb
 
 Note : only arguments such as  <size_in_mb> and <directory_path> are mandatory.
