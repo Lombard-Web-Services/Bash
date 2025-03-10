@@ -83,7 +83,7 @@ file_sort <size_in_mb> <directory_path> [-v|--verbose] [--sort-by <date|filename
 ```
 Command : 
 ```sh
-./file_sorter.sh 10 download/ --sort-by filename --sort-order asc -v
+./file_sort.sh 10 download/ --sort-by filename --sort-order asc -v
 ```
 * The -v argument permit to output the log (verbose)
 * --sort-order asc define the sorting by ascending order
