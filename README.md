@@ -73,6 +73,25 @@ Will use current date: 2025:03:08 18:43:13
 * Verbose permit to show debug messages
 * heuristic permit to watch for metadata containing "date" and modify them on the fly
 
+## file_sort find files by size & sort by date, size, filename
+It's a program that permit to find all files exceeding an especific size in Mb, to sort them by date , filename or size.
+### How to use
+For finding all files exceeding 10 Mb in the download folder, and sort the result into file_sorter_result_[date].log
+```sh
+Usage:
+file_sort <size_in_mb> <directory_path> [-v|--verbose] [--sort-by <date|filename|size>] [--sort-order <asc|desc>]
+```
+Command : 
+```sh
+./file_sorter.sh 10 download/ --sort-by filename --sort-order asc -v
+```
+* The -v argument permit to output the log (verbose)
+* --sort-order asc define the sorting by ascending order
+* --sort-by filename permit to sort by filename
+* download is the directory path (relative or not)
+* 10 is for files which size exceed 10Mb
+
+Note : only arguments such as  <size_in_mb> and <directory_path> are mandatory.
 
 ### Credits 
 Grok 3.0
