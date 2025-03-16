@@ -93,6 +93,59 @@ Command :
 
 Note : only arguments such as  <size_in_mb> and <directory_path> are mandatory.
 
+## java_webserver_setup.sh Setup a java web server from scratch
+**java_webserver_setup.sh** is a  java web server setup for linux supporting html javascript and database storage. This script generate automatically : directories, Maven Configuration (pom.xml),Main Application (MyWebServerApplication.java), REST Controller (DataController.java), HTML File (src/main/resources/static/index.html), JavaScript File (src/main/resources/static/script.js), Database Config (src/main/resources/application.properties)
+
+### Structure
+Here is the structure where the files are created from the WD (working directory)
+```
+my-web-server/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           ├── MyWebServerApplication.java  (Main app)
+│   │   │           └── controller/
+│   │   │               └── DataController.java    (REST API)
+│   │   └── resources/
+│   │       ├── static/
+│   │       │   ├── index.html                (HTML file)
+│   │       │   └── script.js                 (JavaScript file)
+│   │       └── application.properties        (Database config)
+├── pom.xml                                   (Maven dependencies)
+└── run-server.sh                             (Bash script)
+```
+
+### Db config
+Database Config (src/main/resources/application.properties)
+Configures the H2 database (runs in-memory for now).
+```
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.h2.console.enabled=true
+```
+You can later add more features such as :
+* MySQL/PostgreSQL by updating pom.xml and application.properties.
+* Adding CRUD operations in DataController.java with a database (e.g., using Spring Data JPA).
+* Adding Spring Security for authentication.
+
+### Usage 
+Save the Script:
+Copy the script above into a file named setup-and-run.sh in an empty directory.
+
+Make It Executable:
+Run: 
+```sh
+chmod +x java_webserver_setup.sh
+
+Execute:
+```sh
+./java_webserver_setup.sh
+```
+
 ### Credits 
 Grok 3.0
 
