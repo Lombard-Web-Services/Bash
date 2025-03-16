@@ -133,9 +133,6 @@ You can later add more features such as :
 * Adding Spring Security for authentication.
 
 ### Usage 
-Save the Script:
-Copy the script above into a file named setup-and-run.sh in an empty directory.
-
 Make It Executable:
 Run: 
 ```sh
