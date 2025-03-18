@@ -147,15 +147,16 @@ Execute:
 dkim_pkcs12_keygen.sh is a shell script that permit to generate a 2048 DKIM Key for mailcow external letsencrypt certificates.
 
 ### Usage
+Create execution rights with chmod +x **dkim_pkcs12_keygen.sh** , configure the directories of the certificates in the script, and execute.
 ```sh
-#./dkim_pkcs12_keygen.sh
+./dkim_pkcs12_keygen.sh
 Debug: Generating private key...
 Debug: Extracting public key...
 Debug: Creating DNS TXT record...
 v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
 Debug: Write keys and DNS record to ./dkim_keys/? (yes/no):
-``
+```
 
-### Credits 
+## Credits 
 Grok 3.0
 
