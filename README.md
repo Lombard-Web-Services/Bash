@@ -157,6 +157,26 @@ v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
 Debug: Write keys and DNS record to ./dkim_keys/? (yes/no):
 ```
 
+## Replace to replace string recursively
+Replace is a program **./replace** that permit to replace a string recursively. 2 versions of this program exist, one version coded in C lang which do not use the library sed , grep , find, and  rename another in bash script using these libraries.
+
+### Usage: 
+3 options could be selected : 
+* str_replace to replace a string in files recursively 
+* fld_replace to replace folder(s) names and filenames recursively
+* comb_replace that use  str_replace and fld_replace at the same place
+
+Set -v for verbose output.
+
+```sh
+Usage: ./replace "search_string" "replace_string" [-i directory] [-v] [--opt {str_replace|fld_replace|comb_replace}]
+Examples:
+  ./replace "old" "new"                    # Default: comb_replace in current directory
+  ./replace "old" "new" -i /path -v       # comb_replace in specified directory with verbose output
+  ./replace "old" "new" -i /path --opt str_replace
+
+```
+
 ## Credits 
 Grok 3.0
 
