@@ -2,8 +2,7 @@
 # By Thibaut LOMBARD (Lombard Web)
 # PicoTTS version of Spring Boot TTS web app with PostgreSQL and pico2wave
 
-# Variables
-PROJECT_DIR="tts-app"
+# VariablesPROJECT_DIR="tts-app"
 PACKAGE_DIR="src/main/java/com/example"
 RESOURCES_DIR="src/main/resources"
 STATIC_DIR="src/main/resources/static"
@@ -62,14 +61,17 @@ check_tool() {
 check_tool "mvn" "maven" "MVN_PATH"
 check_tool "psql" "postgresql" "PSQL_PATH"
 
-# Install pico2wave
-echo "Installing pico2wave..."
-sudo apt update && sudo apt install -y libttspico-utils
+# Install pico2wave and language data
+echo "Installing pico2wave and language data..."
+sudo apt update && sudo apt install -y libttspico-utils libttspico-data
 if ! command -v pico2wave &> /dev/null; then
- echo "Failed to install pico2wave. Please install manually: sudo apt install libttspico-utils"
+ echo "Failed to install pico2wave. Please install manually: sudo apt install libttspico-utils libttspico-data"
  exit 1
 fi
 echo "pico2wave installed successfully."
+echo "Checking available languages for pico2wave..."
+pico2wave -l ? 2>&1 | tee /tmp/pico_languages.txt
+echo "Supported languages listed in /tmp/pico_languages.txt"
 
 # Clear Maven cache
 echo "Clearing Maven cache for Spring and Hibernate dependencies..."
@@ -85,7 +87,7 @@ mkdir -p "$PROJECT_DIR/$PACKAGE_DIR/entity" \
    "$PROJECT_DIR/$PACKAGE_DIR/controller" \
    "$PROJECT_DIR/$RESOURCES_DIR" \
    "$PROJECT_DIR/$STATIC_DIR" \
-   "$PROJECT_DIR/tts-audio" # New directory for audio files
+   "$PROJECT_DIR/tts-audio"
 wait
 
 cd "$PROJECT_DIR" || exit
@@ -156,7 +158,7 @@ server.port=8080
 EOF
 wait
 
-# Create index.html with updated audio handling
+# Create index.html with language dropdown
 echo "Creating index.html..."
 cat > "$STATIC_DIR/index.html" << 'EOF'
 <!DOCTYPE html>
@@ -166,24 +168,37 @@ cat > "$STATIC_DIR/index.html" << 'EOF'
  <title>TTS App</title>
 </head>
 <body>
- <h1>Text-to-Speech en Français</h1>
+ <h1>Text-to-Speech en Plusieurs Langues</h1>
  <input type="text" id="textInput" placeholder="Entrez du texte ici">
+ 
+ <label for="languageSelect">Langue :</label>
+ <select id="languageSelect">
+  <option value="fr-FR" selected>Français (fr-FR)</option>
+  <option value="de-DE">Allemand (de-DE)</option>
+  <option value="en-US">Anglais US (en-US)</option>
+  <option value="en-GB">Anglais GB (en-GB)</option>
+  <option value="es-ES">Espagnol (es-ES)</option>
+  <option value="it-IT">Italien (it-IT)</option>
+ </select>
+
  <button onclick="speak()">Parler</button>
  <audio id="audioPlayer" controls></audio>
 
  <script>
   function speak() {
    const text = document.getElementById("textInput").value;
+   const lang = document.getElementById("languageSelect").value;
+
    fetch('/speak', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: text })
+    body: JSON.stringify({ text: text, lang: lang })
    })
    .then(response => response.text())
    .then(audioUrl => {
     console.log("Received audio URL:", audioUrl);
     const audioPlayer = document.getElementById("audioPlayer");
-    audioPlayer.src = audioUrl; // Use the dynamic /audio/ endpoint
+    audioPlayer.src = audioUrl;
     audioPlayer.play();
    })
    .catch(error => console.error('Error:', error));
@@ -212,7 +227,7 @@ public class TtsApp {
 EOF
 wait
 
-# Create TtsController.java with dynamic audio serving
+# Create TtsController.java with multi-language support
 echo "Creating TtsController.java..."
 cat > "$PACKAGE_DIR/controller/TtsController.java" << 'EOF'
 package com.example.controller;
@@ -231,28 +246,38 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class TtsController {
 
  private final SpeechLogRepository speechLogRepository;
- private static final String AUDIO_DIR = "tts-audio"; // New folder for storing audio
+ private static final String AUDIO_DIR = "tts-audio";
+ private static final Set<String> SUPPORTED_LANGUAGES = new HashSet<>(Arrays.asList(
+   "de-DE", "en-US", "en-GB", "es-ES", "fr-FR", "it-IT"
+ ));
 
  @Autowired
  public TtsController(SpeechLogRepository speechLogRepository) {
   this.speechLogRepository = speechLogRepository;
-  new File(AUDIO_DIR).mkdirs(); // Ensure the directory exists
+  new File(AUDIO_DIR).mkdirs();
  }
 
  @PostMapping("/speak")
  public String speak(@RequestBody SpeechRequest request) {
   String text = request.getText();
+  String lang = request.getLang();
+
+  // Default to French if language is missing or invalid
+  if (lang == null || !SUPPORTED_LANGUAGES.contains(lang)) {
+   lang = "fr-FR";
+  }
+
   String filename = UUID.randomUUID() + ".wav";
   String filepath = AUDIO_DIR + "/" + filename;
 
   // Run pico2wave
-  ProcessBuilder processBuilder = new ProcessBuilder("pico2wave", "-w", filepath, text);
+  ProcessBuilder processBuilder = new ProcessBuilder("pico2wave", "-l", lang, "-w", filepath, text);
   try {
    Process process = processBuilder.start();
    process.waitFor();
@@ -275,7 +300,6 @@ public class TtsController {
   }
  }
 
- // Serve the audio file dynamically
  @GetMapping("/audio/{filename}")
  public ResponseEntity<Resource> getAudio(@PathVariable String filename) {
   try {
@@ -297,9 +321,13 @@ public class TtsController {
 
 class SpeechRequest {
  private String text;
+ private String lang;
 
  public String getText() { return text; }
  public void setText(String text) { this.text = text; }
+
+ public String getLang() { return lang; }
+ public void setLang(String lang) { this.lang = lang; }
 }
 EOF
 wait
@@ -398,6 +426,6 @@ wait $JAVA_PID
 
 echo "JAR file is built at target/$JAR_NAME."
 echo "Access the app at http://localhost:8080"
-echo "Using system-installed pico2wave for TTS."
+echo "Using system-installed pico2wave with multi-language support."
 echo "Audio files served from tts-audio/ directory."
 echo "To run it later, use: $JDK17_HOME/bin/java -jar target/$JAR_NAME"
