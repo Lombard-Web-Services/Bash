@@ -176,6 +176,14 @@ Examples:
   ./replace "old" "new" -i /path --opt str_replace
 
 ```
+## Spring Boot TTS web app with PostgreSQL 
+**setup-tts-maven-spring-boot.sh** is an setup script for a web app java based, using spring boot, maven, postgreSQL, free-tts, MBROLA.
+### Usage :
+customize the file setup-tts-maven-spring-boot.sh to fit your needs (database credentials, custom index), the server is executing a java web server on 8080 at the end of the install. Feel free to rely your own language (voice) in the end.
+```sh
+chmod +x setup-tts-maven-spring-boot.sh
+/setup-tts-maven-spring-boot.sh
+```
 
 ## Credits 
 Grok 3.0
