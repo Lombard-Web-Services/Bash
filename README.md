@@ -186,6 +186,11 @@ customize the file setup-tts-maven-spring-boot.sh to fit your needs (database cr
 chmod +x setup-tts-maven-spring-boot.sh
 /setup-tts-maven-spring-boot.sh
 ```
+For the version using Pico2wav java integration
+```sh
+chmod +x setup-[pico]tts-maven-spring-boot.sh
+/setup-[pico]tts-maven-spring-boot.sh
+```
 
 ## Credits 
 Grok 3.0
