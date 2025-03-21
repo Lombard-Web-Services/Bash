@@ -2,7 +2,8 @@
 # By Thibaut LOMBARD (Lombard Web)
 # PicoTTS version of Spring Boot TTS web app with PostgreSQL and pico2wave
 
-# VariablesPROJECT_DIR="tts-app"
+# Variables
+PROJECT_DIR="tts-app"
 PACKAGE_DIR="src/main/java/com/example"
 RESOURCES_DIR="src/main/resources"
 STATIC_DIR="src/main/resources/static"
@@ -158,19 +159,20 @@ server.port=8080
 EOF
 wait
 
-# Create index.html with language dropdown
+# Create index.html with custom controls
 echo "Creating index.html..."
 cat > "$STATIC_DIR/index.html" << 'EOF'
 <!DOCTYPE html>
 <html lang="fr">
 <head>
  <meta charset="UTF-8">
- <title>TTS App</title>
+ <title>TTS Robot Voice</title>
 </head>
 <body>
- <h1>Text-to-Speech en Plusieurs Langues</h1>
- <input type="text" id="textInput" placeholder="Entrez du texte ici">
+ <h1>Text-to-Speech avec Effet Robotique</h1>
  
+ <input type="text" id="textInput" placeholder="Entrez du texte ici">
+
  <label for="languageSelect">Langue :</label>
  <select id="languageSelect">
   <option value="fr-FR" selected>Français (fr-FR)</option>
@@ -182,9 +184,34 @@ cat > "$STATIC_DIR/index.html" << 'EOF'
  </select>
 
  <button onclick="speak()">Parler</button>
+
+ <h3>Personnalisation du robot</h3>
+ 
+ <label for="modFreq">Modulation (Hz):</label>
+ <input type="range" id="modFreq" min="20" max="500" value="100" step="10" oninput="updateLabel('modFreq', 'modFreqLabel')">
+ <span id="modFreqLabel">100 Hz</span>
+
+ <br>
+
+ <label for="filterFreq">Filtre (Hz):</label>
+ <input type="range" id="filterFreq" min="500" max="3000" value="1000" step="50" oninput="updateLabel('filterFreq', 'filterFreqLabel')">
+ <span id="filterFreqLabel">1000 Hz</span>
+
+ <br>
+
+ <label for="distortion">Distorsion:</label>
+ <input type="range" id="distortion" min="0" max="100" value="20" step="5" oninput="updateLabel('distortion', 'distortionLabel')">
+ <span id="distortionLabel">20</span>
+
+ <br><br>
+
  <audio id="audioPlayer" controls></audio>
 
  <script>
+  function updateLabel(sliderId, labelId) {
+   document.getElementById(labelId).innerText = document.getElementById(sliderId).value + (sliderId === 'distortion' ? '' : ' Hz');
+  }
+
   function speak() {
    const text = document.getElementById("textInput").value;
    const lang = document.getElementById("languageSelect").value;
@@ -197,11 +224,65 @@ cat > "$STATIC_DIR/index.html" << 'EOF'
    .then(response => response.text())
    .then(audioUrl => {
     console.log("Received audio URL:", audioUrl);
-    const audioPlayer = document.getElementById("audioPlayer");
-    audioPlayer.src = audioUrl;
-    audioPlayer.play();
+    playRobotVoice(audioUrl);
    })
    .catch(error => console.error('Error:', error));
+  }
+
+  function playRobotVoice(audioUrl) {
+   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+   fetch(audioUrl)
+    .then(response => response.arrayBuffer())
+    .then(data => audioCtx.decodeAudioData(data))
+    .then(audioBuffer => {
+     const source = audioCtx.createBufferSource();
+     source.buffer = audioBuffer;
+
+     // Get user-selected values from sliders
+     const modFreqValue = parseFloat(document.getElementById("modFreq").value);
+     const filterFreqValue = parseFloat(document.getElementById("filterFreq").value);
+     const distortionValue = parseFloat(document.getElementById("distortion").value);
+
+     // Bandpass Filter (Changes tone)
+     const filter = audioCtx.createBiquadFilter();
+     filter.type = "bandpass";
+     filter.frequency.value = filterFreqValue;
+
+     // Oscillator for robotic effect (Modulates filter frequency)
+     const modulator = audioCtx.createOscillator();
+     modulator.frequency.value = modFreqValue;
+
+     const modGain = audioCtx.createGain();
+     modGain.gain.value = 500;
+
+     modulator.connect(modGain);
+     modGain.connect(filter.frequency);
+     modulator.start();
+
+     // Distortion Effect
+     const distortion = audioCtx.createWaveShaper();
+     distortion.curve = makeDistortionCurve(distortionValue);
+     distortion.oversample = '4x';
+
+     // Connect nodes
+     source.connect(filter);
+     filter.connect(distortion);
+     distortion.connect(audioCtx.destination);
+
+     // Play the sound
+     source.start();
+    })
+    .catch(error => console.error("Error processing audio:", error));
+  }
+
+  // Function to create a distortion curve
+  function makeDistortionCurve(amount) {
+   let n_samples = 256, curve = new Float32Array(n_samples), deg = Math.PI / 180;
+   for (let i = 0; i < n_samples; ++i) {
+    let x = i * 2 / n_samples - 1;
+    curve[i] = (3 + amount) * x * 20 * deg / (Math.PI + amount * Math.abs(x));
+   }
+   return curve;
   }
  </script>
 </body>
@@ -227,7 +308,7 @@ public class TtsApp {
 EOF
 wait
 
-# Create TtsController.java with multi-language support
+# Create TtsController.java (unchanged)
 echo "Creating TtsController.java..."
 cat > "$PACKAGE_DIR/controller/TtsController.java" << 'EOF'
 package com.example.controller;
@@ -426,6 +507,6 @@ wait $JAVA_PID
 
 echo "JAR file is built at target/$JAR_NAME."
 echo "Access the app at http://localhost:8080"
-echo "Using system-installed pico2wave with multi-language support."
+echo "Using system-installed pico2wave with multi-language and customizable robotic effect."
 echo "Audio files served from tts-audio/ directory."
 echo "To run it later, use: $JDK17_HOME/bin/java -jar target/$JAR_NAME"
