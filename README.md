@@ -178,6 +178,8 @@ Examples:
 ```
 ## Spring Boot TTS web app with PostgreSQL 
 **setup-tts-maven-spring-boot.sh** is an setup script for a web app java based, using spring boot, maven, postgreSQL, free-tts, MBROLA.
+Another version, the PicoTTS version including Pico2wav read text more fluently, so to install , choose **setup-[pico]tts-maven-spring-boot.sh**.
+
 ### Usage :
 customize the file setup-tts-maven-spring-boot.sh to fit your needs (database credentials, custom index), the server is executing a java web server on 8080 at the end of the install. Feel free to rely your own language (voice) in the end.
 ```sh
