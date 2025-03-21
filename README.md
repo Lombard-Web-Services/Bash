@@ -184,12 +184,12 @@ Another version, the PicoTTS version including Pico2wav read text more fluently,
 customize the file setup-tts-maven-spring-boot.sh to fit your needs (database credentials, custom index), the server is executing a java web server on 8080 at the end of the install. Feel free to rely your own language (voice) in the end.
 ```sh
 chmod +x setup-tts-maven-spring-boot.sh
-/setup-tts-maven-spring-boot.sh
+./setup-tts-maven-spring-boot.sh
 ```
 For the version using Pico2wav java integration
 ```sh
 chmod +x setup-[pico]tts-maven-spring-boot.sh
-/setup-[pico]tts-maven-spring-boot.sh
+./setup-[pico]tts-maven-spring-boot.sh
 ```
 
 ## Credits 
