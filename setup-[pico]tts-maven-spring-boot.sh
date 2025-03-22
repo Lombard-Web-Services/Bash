@@ -2,8 +2,7 @@
 # By Thibaut LOMBARD (Lombard Web)
 # PicoTTS version of Spring Boot TTS web app with PostgreSQL and pico2wave
 
-# Variables
-PROJECT_DIR="tts-app"
+# VariablesPROJECT_DIR="tts-app"
 PACKAGE_DIR="src/main/java/com/example"
 RESOURCES_DIR="src/main/resources"
 STATIC_DIR="src/main/resources/static"
