@@ -191,6 +191,25 @@ For the version using Pico2wav java integration
 chmod +x setup-[pico]tts-maven-spring-boot.sh
 ./setup-[pico]tts-maven-spring-boot.sh
 ```
+## Fullpage Screenshot OCR
+**fullpage_screenshot_OCR.sh** is a program that permit to take a fullpage screenshot and output the results as text or csv. The program use wkhtmltoimage to generate the full page screenshot and tesseractOCR to perform the optical character recognition to further generate a csv.
+
+### Usage : 
+Firstly give executable rights to the file with chmod +x fullpage_screenshot_OCR.sh and you can execute the command as below.
+
+```sh
+Usage: ./fullpage_screenshot_OCR.sh -u <URL> [-c] [-t] [-j] [-d <delimiter>] [-p <png_file>] [-s <csv_file>] [-x <txt_file>]
+  -u <URL>   : Specify the URL to capture (required)
+  -c   : Save output as CSV with specified delimiter
+  -t   : Save output as raw TXT without post-processing
+  -j   : Enable JavaScript in wkhtmltoimage (default: disabled)
+  -d <delimiter>: Set CSV delimiter (default: ';')
+  -p <png_file> : Specify PNG screenshot filename (default: derived from URL)
+  -s <csv_file> : Specify CSV output filename (default: derived from URL)
+  -x <txt_file> : Specify TXT output filename (default: derived from URL)
+At least one of -c or -t must be specified.
+```
+
 
 ## Credits 
 Grok 3.0
