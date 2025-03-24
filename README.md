@@ -209,6 +209,34 @@ Usage: ./fullpage_screenshot_OCR.sh -u <URL> [-c] [-t] [-j] [-d <delimiter>] [-p
   -x <txt_file> : Specify TXT output filename (default: derived from URL)
 At least one of -c or -t must be specified.
 ```
+### v2 fullpage_screenshot_OCR_v2.sh
+Some improvement has been added into the v2, the program is refactored, **fullpage_screenshot_OCR_v2.sh**, it can now work with headless chromium, Dom content retreival, screen-width and screen-height as option, delay, and network features.
+
+### Usage
+As the first version , chmod +x before use. Use the scripts as user and non root user.
+
+```sh
+Usage: ./fullpage_screenshot.sh -u <URL> [options]
+  -u <URL>   : Specify the URL to capture (required)
+  -r <tool>  : Screenshot tool: 'wkhtmltoimage' or 'chromium' (default: 'wkhtmltoimage')
+  -w <width> : Screen width in pixels (default: 1280)
+  -h <height>: Screen height in pixels (default: 1920)
+  -j         : Enable JavaScript execution (default: disabled)
+  -e <delay> : Delay in milliseconds for JS execution (optional, supports decimals)
+  -l <lang>  : OCR language (default: 'eng')
+  -d <delim> : CSV delimiter (default: ';')
+  -f <folder>: Output folder (default: 'generated')
+  -p <ip:port>: Enable SOCKS5 proxy for Chromium (e.g., '127.0.0.1:9050')
+Output modes (exactly one required, or none for default):
+  -s         : Screenshot only
+  -c         : Screenshot + CSV OCR
+  -t         : Screenshot + TXT OCR
+  -C         : CSV OCR only (delete screenshot after)
+  -T         : TXT OCR only (delete screenshot after)
+  -m         : DOM content only (Chromium only)
+  -a         : Screenshot + TXT OCR + CSV OCR
+Default (no mode specified): Screenshot + TXT OCR + CSV OCR + DOM (Chromium only)
+```
 
 
 ## Credits 
