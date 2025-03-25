@@ -237,7 +237,17 @@ Output modes (exactly one required, or none for default):
   -a         : Screenshot + TXT OCR + CSV OCR
 Default (no mode specified): Screenshot + TXT OCR + CSV OCR + DOM (Chromium only)
 ```
-
+## PEtransfer a c program to transfer the PEheader
+**PEtransfer** is a c program that permit to transfer the PEheader from one executable file to another. Keeping the icon resource, and the section table as option (for testing purpose).  
+### Usage :
+Compile this program with gcc, (MinGW  or Visual Studio).
+```sh
+gcc -o PEtransfer pe_transfer.c
+```
+To transfer with the section table add the -s flag.
+```sh
+PEtransfer source.exe target.exe
+```
 
 ## Credits 
 Grok 3.0
