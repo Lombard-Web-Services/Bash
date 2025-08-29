@@ -255,7 +255,7 @@ PEtransfer source.exe target.exe
 
 **GitHub:** [https://github.com/Lombard-Web-Services/Bash](https://github.com/Lombard-Web-Services/Bash)
 
-### 📖 License Details 📜
+### 📖 License Details 
 Some work marked as GNU license stays in GPL3, others which are not marked are in Creative Commons.
 This work is licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License**. To view a copy of this license, visit [http://creativecommons.org/licenses/by-nc-nd/4.0/](http://creativecommons.org/licenses/by-nc-nd/4.0/) or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
