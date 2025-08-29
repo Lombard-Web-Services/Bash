@@ -1,7 +1,9 @@
-# Bash
+# 🐚 Bash 
+
 Some tools I have programmed in Bash
 
-## BetC.sh Backup & Compress
+## 💾 BetC.sh Backup & Compress 
+
 A script that permit to backup all the files of a mobile phone folder and transfer them on local directory , and compress those which have a specific size in Kb for images and in Mb for videos by re-encoding. The script is able to pack JPG and MP4 files in  zip , keeping the directory listing, to connect to android via Android debug bridge, to use Nvidia GPU for faster processing, and remove junk files and folders. All of this in one line.
 
 ### Usage
@@ -26,14 +28,15 @@ Listing :
 * Do not compress files by given size
 * GPU compliant for ffmpeg
 
-## meta_transfer.sh transfer metadata instantly from one place to another
+## 📥 meta_transfer.sh 
+
 meta_transfer.sh is a script that permit to transfer metadata instantly from one place to another. This script use only exiftool and bash. Source file(s) contained into the directory(ies) must have the same name than the destination files.
 
 #### Metadata 
 The metadata that the script transfers if it's found are the following .
 ```sh
 "File Modification Date/Time"
-"File Access Date/Time"           
+"File Access Date/Time"                 
 "File Inode Change Date/Time"
 "Shutter Speed"
 "Create Date"
@@ -59,7 +62,8 @@ The metadata that the script transfers if it's found are the following .
 "Rotation"
 "GPS Position"
 ```
-## meta_refresh refresh modification date and create date to now
+## ⏰ meta_refresh 
+
 This script permit to refresh the date of creation and modification date of each files recursively to the actual date.
 
 #### Usage 
@@ -73,7 +77,8 @@ Will use current date: 2025:03:08 18:43:13
 * Verbose permit to show debug messages
 * heuristic permit to watch for metadata containing "date" and modify them on the fly
 
-## file_sort find files by size & sort by date, size, filename
+## 📂 file_sort 
+
 It's a program that permit to find all files exceeding an especific size in Mb, to sort them by date , filename or size.
 ### How to use
 For finding all files exceeding 10 Mb in the download folder, and sort the result into file_sorter_result_[date].log
@@ -93,7 +98,8 @@ Command :
 
 Note : only arguments such as  <size_in_mb> and <directory_path> are mandatory.
 
-## java_webserver_setup.sh Setup a java web server from scratch
+## ☕ java_webserver_setup.sh 
+
 **java_webserver_setup.sh** is a  java web server setup for linux supporting html javascript and database storage. This script generate automatically : directories, Maven Configuration (pom.xml),Main Application (MyWebServerApplication.java), REST Controller (DataController.java), HTML File (src/main/resources/static/index.html), JavaScript File (src/main/resources/static/script.js), Database Config (src/main/resources/application.properties)
 
 ### Structure
@@ -107,14 +113,14 @@ my-web-server/
 │   │   │       └── example/
 │   │   │           ├── MyWebServerApplication.java  (Main app)
 │   │   │           └── controller/
-│   │   │               └── DataController.java    (REST API)
+│   │   │               └── DataController.java     (REST API)
 │   │   └── resources/
 │   │       ├── static/
-│   │       │   ├── index.html                (HTML file)
-│   │       │   └── script.js                 (JavaScript file)
-│   │       └── application.properties        (Database config)
-├── pom.xml                                   (Maven dependencies)
-└── run-server.sh                             (Bash script)
+│   │       │   ├── index.html                  (HTML file)
+│   │       │   └── script.js                     (JavaScript file)
+│   │       └── application.properties          (Database config)
+├── pom.xml                                     (Maven dependencies)
+└── run-server.sh                                     (Bash script)
 ```
 
 ### Db config
@@ -143,7 +149,8 @@ Execute:
 ./java_webserver_setup.sh
 ```
 
-## DKIM & PKCS12 Keygen for mailcow
+## 🔒 DKIM & PKCS12 Keygen 🔑
+
 dkim_pkcs12_keygen.sh is a shell script that permit to generate a 2048 DKIM Key (DNS) and PKCS12 keys (Imap) for mailcow external letsencrypt certificates.
 
 ### Usage
@@ -157,7 +164,8 @@ v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
 Debug: Write keys and DNS record to ./dkim_keys/? (yes/no):
 ```
 
-## Replace to replace string recursively
+## 🔁 Replace 
+
 Replace is a program **./replace** that permit to replace a string recursively. 2 versions of this program exist, one version coded in C lang which do not use the library sed , grep , find, and  rename another in bash script using these libraries.
 
 ### Usage: 
@@ -171,27 +179,13 @@ Set -v for verbose output.
 ```sh
 Usage: ./replace "search_string" "replace_string" [-i directory] [-v] [--opt {str_replace|fld_replace|comb_replace}]
 Examples:
-  ./replace "old" "new"                    # Default: comb_replace in current directory
-  ./replace "old" "new" -i /path -v       # comb_replace in specified directory with verbose output
+  ./replace "old" "new"              # Default: comb_replace in current directory
+  ./replace "old" "new" -i /path -v      # comb_replace in specified directory with verbose output
   ./replace "old" "new" -i /path --opt str_replace
 
 ```
-## Spring Boot TTS web app with PostgreSQL 
-**setup-tts-maven-spring-boot.sh** is an setup script for a web app java based, using spring boot, maven, postgreSQL, free-tts, MBROLA.
-Another version, the PicoTTS version including Pico2wav read text more fluently, so to install , choose **setup-[pico]tts-maven-spring-boot.sh**.
+## 📸 Fullpage Screenshot OCR 
 
-### Usage :
-customize the file setup-tts-maven-spring-boot.sh to fit your needs (database credentials, custom index), the server is executing a java web server on 8080 at the end of the install. Feel free to rely your own language (voice) in the end.
-```sh
-chmod +x setup-tts-maven-spring-boot.sh
-./setup-tts-maven-spring-boot.sh
-```
-For the version using Pico2wav java integration
-```sh
-chmod +x setup-[pico]tts-maven-spring-boot.sh
-./setup-[pico]tts-maven-spring-boot.sh
-```
-## Fullpage Screenshot OCR
 **fullpage_screenshot_OCR.sh** is a program that permit to take a fullpage screenshot and output the results as text or csv. The program use wkhtmltoimage to generate the full page screenshot and tesseractOCR to perform the optical character recognition to further generate a csv.
 
 ### Usage : 
@@ -237,8 +231,9 @@ Output modes (exactly one required, or none for default):
   -a         : Screenshot + TXT OCR + CSV OCR
 Default (no mode specified): Screenshot + TXT OCR + CSV OCR + DOM (Chromium only)
 ```
-## PEtransfer a c program to transfer the PEheader
-**PEtransfer** is a c program that permit to transfer the PEheader from one executable file to another. Keeping the icon resource, and the section table as option (for testing purpose).  
+## 💻 PEtransfer 
+
+**PEtransfer** is a c program that permit to transfer the PEheader from one executable file to another. Keeping the icon resource, and the section table as option (for testing purpose).   
 ### Usage :
 Compile this program with gcc, (MinGW  or Visual Studio).
 ```sh
@@ -248,7 +243,22 @@ To transfer with the section table add the -s flag.
 ```sh
 PEtransfer source.exe target.exe
 ```
+---
 
-## Credits 
-Grok 3.0
+## ⚖️ Credits & License 📚
 
+**License:** 
+![Logo de la licence CC BY-NC-ND](CC_BY-NC-ND.png)
+
+**Author:** Thibaut LOMBARD
+
+**GitHub:** [https://github.com/Lombard-Web-Services](https://github.com/Lombard-Web-Services/Bash)
+
+### 📖 License Details 📜
+
+This work is licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License**. To view a copy of this license, visit [http://creativecommons.org/licenses/by-nc-nd/4.0/](http://creativecommons.org/licenses/by-nc-nd/4.0/) or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+The main conditions of this license are:
+* **Attribution (BY):** You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+* **NonCommercial (NC):** You may not use the material for commercial purposes.
+* **NoDerivatives (ND):** If you remix, transform, or build upon the material, you may not distribute the modified material.
